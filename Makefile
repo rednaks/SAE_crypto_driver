@@ -33,3 +33,11 @@ reload:
 clean:
 	cd cryptage && make clean
 	cd comm && make clean
+
+test:
+	@echo "Test crypt_cesar"
+	echo -n "AB" > /dev/comm0
+	@echo "Test crypt_rot13"
+	echo -n "AB" > /dev/comm1
+	@echo "vous pouvez vérifier avec la commande |dmesg|"
+	@echo "Si vous aurez comme résultat réspectif : 'DE' et 'NO' alors tous va bien :)"
