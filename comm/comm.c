@@ -4,6 +4,16 @@
 #include <linux/fs.h>
 
 
+extern void crypt_cesar(char*, int);
+extern void crypt_rot13(char*, int);
+
+// Ces deux fonction ne seront pas utilisés
+// pas spécifié dans l'énnoncé :/
+extern void decrypt_cesar(char*, int); 
+extern void decrypt_rot13(char*, int);
+
+
+
 static int _lread(struct file *f, char *buffer, size_t len, loff_t *ptr);
 static int _lwrite(struct file *f, const char *buffer, size_t len, loff_t *ptr);
 
