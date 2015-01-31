@@ -11,8 +11,9 @@ $(CRYPTO_MOD): $(CRYPTO_MOD).c
 	cd cryptage && make
 	@echo "Compilation du module cryptage terminée"
 
-$(COMM_MOD): $(COMM_MOD).c
+$(COMM_MOD): $(CRYPTO_MOD) $(COMM_MOD).c
 	@echo "Compilation du module comm"
+	ln -s $(PWD)/cryptage/Module.symvers $(PWD)/comm/Module.symvers
 	cd comm && make
 	@echo "Compilation du module comm"
 
