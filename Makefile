@@ -24,6 +24,11 @@ install: $(CRYPTO_MOD) $(COMM_MOD)
 	@echo "Installation du module comm"
 	cd comm && make install
 
+reload:
+	cd comm && make remove
+	cd cryptage && make remove
+	cd cryptage && make install
+	cd comm && make install
 
 clean:
 	cd cryptage && make clean
