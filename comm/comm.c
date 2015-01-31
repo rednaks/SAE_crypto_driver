@@ -2,6 +2,7 @@
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/fs.h>
+#include <linux/uaccess.h>
 
 
 extern void crypt_cesar(char*, int);
@@ -23,6 +24,48 @@ struct file_operations fops = {
   read: _lread
 };
 
+static int _lread(struct file *f, char *buffer, size_t len, loff_t *ptr) {
+  // Pas implémenté car le comportement n'est pas spécifié dans
+  // l'énnoncé :/
+  return 0;
+}
+
+
+static int _lwrite(struct file *f, const char *buffer, size_t len, loff_t *ptr) {
+
+  if(len > 256) {
+    printk("Erreur dépassement de la taille du buffer :( \n");
+    return len;
+  }
+
+  /* On récupérer le numéro mineur pour décider
+     quel algorithme on va utiliser */
+  int minor = MINOR(f->f_dentry->d_inode->i_rdev);
+
+  // Allocation du buffer de taille ne dépassant pas 256
+  char buf[len];
+
+  unsigned long res = copy_from_user(buf, buffer, len);
+  if(res){
+    printk("COMM : Copy not successfull : Aborting :( ...\n");
+    return len;
+  }
+
+
+  if(minor == 0){
+    // cesar !!
+    crypt_cesar(buf, len);
+  }else if (minor == 1)
+  {
+    // rot13
+    crypt_rot13(buf, len);
+  }
+
+  buf[len] = '\0';
+  printk("%s\n", buf);
+
+  return len;
+}
 
 
 static int __init load_module(void) {
