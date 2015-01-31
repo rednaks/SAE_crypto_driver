@@ -41,6 +41,8 @@ static void crypt_cesar(char* buffer, int n) {
 
 }
 
+EXPORT_SYMBOL(crypt_cesar);
+
 static void crypt_rot13(char* buffer, int n) {
   int i = 0;
 
@@ -48,6 +50,8 @@ static void crypt_rot13(char* buffer, int n) {
     buffer[i] = rot13(buffer[i]);
   }
 }
+
+EXPORT_SYMBOL(crypt_rot13);
 
 static void decrypt_cesar(char* buffer, int n) {
   int i = 0;
@@ -57,6 +61,8 @@ static void decrypt_cesar(char* buffer, int n) {
   }
 }
 
+EXPORT_SYMBOL(decrypt_cesar);
+
 static void decrypt_rot13(char* buffer, int n) {
   int i = 0;
 
@@ -65,6 +71,7 @@ static void decrypt_rot13(char* buffer, int n) {
   }
 }
 
+EXPORT_SYMBOL(decrypt_rot13);
 
 static int __init load_module(void) {
   printk("module cryptage chargé!");
